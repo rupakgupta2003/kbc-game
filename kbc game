@@ -1,0 +1,183 @@
+que=['Q1.The International Literacy Day is observed on:',
+  'Q2.The language of Lakshadweep. a Union Territory of India, is',
+  'Q3.Bahubali festival is related to',
+  'Q4.national animal of india?',
+  'Q5.which is widest river of India?',
+   'Q6.largest state of india?',
+   'Q7.How many languages are there in Indian currency notes?',
+   'Q8.The largest gland in the human body is-',
+   'Q9.What is the color of the sky to an astronaut in outer space?',
+   'Q10.Which among the following is the hottest planet in the solar system?']
+
+
+opt=[['8 sep','22 nov','2 may','22 sep'],
+     ['hindi','tamil','malayalam','telgue'],
+     ['islam','hindusim','Buddhism','jainism'],
+     ['lion','tiger','dog','bear'],
+     ['brahmaputra','gomti','ganga','chambal'],
+     ['mp','up','rajastan','J.k'],
+     ['14','17','15','16'],
+     ['liver','adrenal','pituitary','pineal'],
+     ['blue','black','violet','none of these'],
+     ['earth','venus','mars','jupitar']]
+
+weightage=[[4,3,2,1],
+           [3,1,4,2],
+           [1,3,2,4],
+           [3,4,2,1],
+           [4,1,3,2],
+           [2,3,4,1],
+           [1,4,3,2],
+           [4,2,3,1],
+           [3,4,2,1],
+           [2,4,1,3]]
+
+ans=['8 sep','malayalam','jainism','tiger','brahmaputra','rajastan','17','liver','black','venus']
+    
+
+amount=[10,100,1000,10000,10000,100000,1000000,10000000,10000000,100000000,1100000000]
+amount[-1]=0
+
+
+flipque=['What is the color of the sky to an astronaut in outer space?',
+         'Which among the following is the hottest planet in the solar system?','largest state of india?',]
+flipopt=[['blue','black','violet','none of these'],['earth','venus','mars','jupitar'],['mp','up','rajastan','J.k']]
+flipans=['black','venus','rajastan']
+
+def fifty(i):
+    print(que[i])
+    import random as ran
+    l=list.copy(opt[i])
+    l.remove(ans[i])
+    c=ran.choice(l)
+    print(ans[i],",",c)
+    answer=input("enter your answer: ")
+    return answer
+# fifty(2)
+
+# d={'50:50':0,'audience poll': 4,'flipquestion':4}
+# dv = list(d.values())
+# any(dv)
+
+def lifelineCheck():
+    return any(list(d.values()))
+
+# def lifelineCheck():
+#     dv = list(d.values())
+#     if any(dv): return False
+#     else: return True
+
+def lifeline(i):
+    while True:
+        if lifelineCheck():
+            print("which lifeline you want to choose:-")
+            life=input('''
+            press 1 for 50:50
+            press 2 for Audience Poll
+            press 3 for Flip the Question''')
+            if  life=='1' and d['50:50']!=0:
+                answer=fifty(i)
+                d['50:50']-=1
+                return answer
+            elif life=='2' and d['audience poll']!=0:
+                answer=audiencePoll(i)
+                d['audience poll']-=1
+                return answer
+            elif life=='3' and d['flipquestion']!=0:
+                answer=flipQuestion(i)
+                d['flipquestion']-=1
+                return answer
+            else:
+                print("you already used that lifeline")
+        else:
+            print("you have no lifeline .....because you already used all lifeline")
+            answer=input("enter your answer")
+            return answer
+    
+    else:
+        print("----------------")
+
+
+def audiencePoll(i):
+    l=[]
+    print(que[i])
+    print(opt[i])
+    import random as ran
+    for x in range(10):
+        l.append(ran.randint(2,5))
+
+    average=sum(l)/10
+
+    z=(weightage[i].index(round(average)))
+    
+    answ=opt[i][z]
+    
+    print("audience poll is going to option :",answ)
+    print("----------------------------------------------------------")
+    print("you want to go with Audience poll")
+    a=input(''' press 1  for yess
+    or
+ press 0 for no ''')
+    if a=='1':
+        answer=answ
+        return answer
+    elif a=='0':
+        answer=input("enter your answer: ")
+        return answer
+    return answer
+    
+
+import random as ran
+q=ran.choice(flipque)
+
+def flipQuestion(i):
+
+    print(q)
+    print("--your options are--")
+    print(flipopt[flipque.index(q)])
+    answer=input("enter your answer:")
+    return answer
+# flipQuestion(1)
+
+def printques():
+    for i in range(len(que)):
+        print(que[i])
+        print(opt[i])
+        choice=input('''press 0 for choose answer ,or press 1 for lifeline: ''')
+        while 1:
+            if choice=='1':
+                answer=lifeline(i)
+                break
+            elif choice=='0':
+                answer=input("enter your answer: ")
+                break
+        
+        if answer==ans[i] or answer==flipans[flipque.index(q)]:
+            print("--------------------------------------------------------------------")
+            print(f"sahi jawab.....app jeet chuke h : rs {amount[i]} ")
+            print("--------------------------------------------------------------------")
+
+        elif answer!=ans[i]:
+            print("--------------------------------------------------------------------")
+            print("aapne answer dia h ",answer)
+            print(f'''apka jawab galat h ..... 
+aap final amount jeet chuke h {amount[i-1]}
+!!..Thank you for playing Koun banega karodpati..!!''')
+            break
+            
+    
+# printques()
+
+def main():
+    d={'50:50':1,'audience poll': 1,'flipquestion':2}
+    play=input("""press y for play,
+            or
+    press n for exit: """)
+    if play=='y':
+        print("\n\n                        WELCOME TO KOUN BANEGA CROREPATI !!", end = '\n\n')
+        print("------------------------------------------------------------------------------------------", end = '\n')
+        print("------------------------------------------------------------------------------------------", end = '\n\n')
+        printques()
+    else:
+        print("Thank you...... for enter in MY KOUN BANEGA KARODPATI..!!")
+    
